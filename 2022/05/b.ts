@@ -15,30 +15,30 @@ const actualInput = await Deno.readTextFile(
 );
 
 function answer(input = actualInput) {
-  const lines = input.split("\n").filter(Boolean)
+  const lines = input.split("\n").filter(Boolean);
 
   const columns = [];
 
   let line = lines.shift();
 
   while (!line.startsWith(" 1 ")) {
-    for (let i = 1;i<=line.length;i+=4) {
-      if (line[i] === " ") continue
-      const index = (i - 1) / 4
+    for (let i = 1; i <= line.length; i += 4) {
+      if (line[i] === " ") continue;
+      const index = (i - 1) / 4;
       columns[index] ??= [];
-      columns[index].unshift(line[i])
+      columns[index] = [line[i], ...columns[index]];
     }
     line = lines.shift();
   }
 
   for (const line of lines) {
     const [, amountString, , fromString, , toString] = line.split(" ");
-    const amount = Number.parseInt(amountString, 10)
-    const from = Number.parseInt(fromString, 10) - 1
-    const to = Number.parseInt(toString, 10) - 1
+    const amount = Number.parseInt(amountString, 10);
+    const from = Number.parseInt(fromString, 10) - 1;
+    const to = Number.parseInt(toString, 10) - 1;
 
-    const take = columns[from].splice(amount * -1, amount)
-    columns[to].push(...take)
+    const take = columns[from].splice(amount * -1);
+    columns[to].push(...take);
   }
 
   return columns.map((col) => col.pop()).join("");
