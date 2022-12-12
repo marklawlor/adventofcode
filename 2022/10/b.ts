@@ -207,8 +207,6 @@ function answer(input = actualInput) {
     cpuCycle++;
   }
 
-  console.log(output);
-
   return output;
 }
 

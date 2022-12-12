@@ -23,68 +23,46 @@ function answer(input = actualInput) {
     .map(() => [0, 0]);
 
   for (const line of lines) {
-    const [direction, countString] = line.split(" ");
+    const [direction, total] = line.split(" ");
 
-    let modX = 0;
-    let modY = 0;
-
-    switch (direction) {
-      case "U": {
-        modY = 1;
-        break;
-      }
-      case "D": {
-        modY = -1;
-
-        break;
-      }
-      case "L": {
-        modX = -1;
-        break;
-      }
-      case "R": {
-        modX = 1;
-        break;
-      }
-    }
-
-    for (let i = 0; i < Number.parseInt(countString); i++) {
-      for (let j = 0; j < positions.length; j++) {
-        if (j === 0) {
-          positions[j][0] += modX;
-          positions[j][1] += modY;
-        } else {
-          const current = positions[j];
-          const previous = positions[j - 1];
-
-          if (Math.abs(previous[0] - current[0]) >= 2) {
-            const direction = previous[0] - current[0];
-            current[0] += direction > 0 ? 1 : -1;
-
-            if (previous[1] !== current[1]) {
-              current[1] += previous[1] - current[1];
-            }
-          }
-
-          if (Math.abs(previous[1] - current[1]) >= 2) {
-            const direction = previous[1] - current[1];
-            current[1] += direction > 0 ? 1 : -1;
-
-            if (previous[0] !== current[0]) {
-              current[0] += previous[0] - current[0];
-            }
-          }
+    for (let count = 0; count < Number.parseInt(total); count++) {
+      switch (direction) {
+        case "U": {
+          positions[0][0]++;
+          break;
+        }
+        case "D": {
+          positions[0][0]--;
+          break;
+        }
+        case "L": {
+          positions[0][1]--;
+          break;
+        }
+        case "R": {
+          positions[0][1]++;
+          break;
         }
       }
 
-      tailPositions.add(positions[9].join(":"));
+      for (let i = 1; i < positions.length; i++) {
+        const current = positions[i];
+        const previous = positions[i - 1];
+
+        const dx = previous[0] - current[0];
+        const dy = previous[1] - current[1];
+
+        if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+          positions[i][0] += dx === 0 ? 0 : dx / Math.abs(dx);
+          positions[i][1] += dy === 0 ? 0 : dy / Math.abs(dy);
+        }
+      }
+
+      tailPositions.add(positions[positions.length - 1].join(":"));
     }
   }
-
-  console.log(tailPositions);
-  console.log(tailPositions.size);
 
   return tailPositions.size;
 }
 
-console.log("a: ", answer(sampleInput) === sampleSolution, answer());
+console.log("b: ", answer(sampleInput) === sampleSolution, answer());
