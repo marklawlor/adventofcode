@@ -1,5 +1,3 @@
-import { writeAllSync } from "https://deno.land/std/streams/conversion.ts";
-
 const sampleInput = `addx 15
 addx -11
 addx 6
@@ -207,7 +205,8 @@ function answer(input = actualInput) {
     cpuCycle++;
   }
 
-  return output;
+  return output.trim();
 }
 
-console.log("b: ", answer(sampleInput) === sampleSolution, answer());
+console.log("b: ", answer(sampleInput) === sampleSolution);
+console.log(answer());
