@@ -53,8 +53,8 @@ function answer(input = actualInput) {
         const dy = previous[1] - current[1];
 
         if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
-          positions[i][0] += dx === 0 ? 0 : dx / Math.abs(dx);
-          positions[i][1] += dy === 0 ? 0 : dy / Math.abs(dy);
+          positions[i][0] += dx === 0 ? 0 : dx > 0 ? 1 : -1;
+          positions[i][1] += dy === 0 ? 0 : dy > 0 ? 1 : -1;
         }
       }
 
