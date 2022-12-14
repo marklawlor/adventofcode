@@ -45,9 +45,6 @@ function answer(input = actualInput) {
     }
   }
 
-  console.log(rocks);
-  console.log(lowestPoint);
-
   let x = 0;
   let y = 0;
   let count = 0;
@@ -67,13 +64,11 @@ function answer(input = actualInput) {
         x += 1;
       } else {
         count++;
-        console.log(`${x},${y}`);
         rocks.add(`${x},${y}`);
         break;
       }
     }
   }
-  console.log(count);
 
   return count;
 }
